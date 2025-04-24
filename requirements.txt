@@ -2,5 +2,5 @@ streamlit
 tensorflow
 numpy
 Pillow
-opencv-python
+opencv-python==4.5.5.64
 scikit-learn
