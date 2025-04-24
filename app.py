@@ -23,11 +23,11 @@ gdown.download("https://drive.google.com/file/d/14A73FT3MzdGu4h1m9DEFvwm7XoW3erf
 
 
 # Load models
-#svm_model = joblib.load("models/svm_model.pkl")
-#log_model = joblib.load("models/logistic_regression_model.pkl")
-#cnn_model = load_model("models/cnn_blood_cancer_model.h5")
-#xcept_model = load_model("models/xception_blood_cancer_model.h5")
-#incep_model = load_model("models/inceptionv3_blood_cancer_model.h5")
+svm_model = joblib.load("models/svm_model.pkl")
+log_model = joblib.load("models/logistic_regression_model.pkl")
+cnn_model = load_model("models/cnn_blood_cancer_model.h5")
+xcept_model = load_model("models/xception_blood_cancer_model.h5")
+incep_model = load_model("models/inceptionv3_blood_cancer_model.h5")
 
 
 # Load feature extractor
