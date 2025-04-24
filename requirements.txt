@@ -5,3 +5,4 @@ Pillow
 opencv-python==4.5.5.64
 scikit-learn
 gdown
+joblib==1.1.0
