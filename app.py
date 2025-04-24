@@ -19,19 +19,19 @@ label_map = {'Benign': 0, '[Malignant] Pre-B': 1, '[Malignant] Pro-B': 2, '[Mali
 import gdown
 
 # Download models from Google Drive
-gdown.download("https://drive.google.com/file/d/178mgl9upoITsR1YlWJ4AJLnzX3SJoN0N/view?usp=sharing", "models/cnn_blood_cancer_model.h5", quiet=False)
-gdown.download("https://drive.google.com/file/d/1K4MmvR5-FlV98CfADY8t7MQB_4SkZ3jp/view?usp=sharing", "models/inceptionv3_blood_cancer_model.h5", quiet=False)
-gdown.download("https://drive.google.com/file/d/1P0AVe1fA5n1_nILogO7oMqoarQky4Y-V/view?usp=sharing", "models/logistic_regression_model.pkl", quiet=False)
-gdown.download("https://drive.google.com/file/d/1v7-jcuOIE4xfZcWG3PuY5__AAZTRGKLY/view?usp=sharing", "models/svm_model.pkl", quiet=False)
-gdown.download("https://drive.google.com/file/d/14A73FT3MzdGu4h1m9DEFvwm7XoW3erfF/view?usp=sharing", "models/xception_blood_cancer_model.h5", quiet=False)
+gdown.download("https://drive.google.com/file/d/178mgl9upoITsR1YlWJ4AJLnzX3SJoN0N/view?usp=sharing", "cnn_blood_cancer_model.h5", quiet=False)
+gdown.download("https://drive.google.com/file/d/1K4MmvR5-FlV98CfADY8t7MQB_4SkZ3jp/view?usp=sharing", "inceptionv3_blood_cancer_model.h5", quiet=False)
+gdown.download("https://drive.google.com/file/d/1P0AVe1fA5n1_nILogO7oMqoarQky4Y-V/view?usp=sharing", "logistic_regression_model.pkl", quiet=False)
+gdown.download("https://drive.google.com/file/d/1v7-jcuOIE4xfZcWG3PuY5__AAZTRGKLY/view?usp=sharing", "svm_model.pkl", quiet=False)
+gdown.download("https://drive.google.com/file/d/14A73FT3MzdGu4h1m9DEFvwm7XoW3erfF/view?usp=sharing", "xception_blood_cancer_model.h5", quiet=False)
 
 
 # Load models
-svm_model = joblib.load("models/svm_model.pkl")
-log_model = joblib.load("models/logistic_regression_model.pkl")
-cnn_model = load_model("models/cnn_blood_cancer_model.h5")
-xcept_model = load_model("models/xception_blood_cancer_model.h5")
-incep_model = load_model("models/inceptionv3_blood_cancer_model.h5")
+svm_model = joblib.load("svm_model.pkl")
+log_model = joblib.load("logistic_regression_model.pkl")
+cnn_model = load_model("cnn_blood_cancer_model.h5")
+xcept_model = load_model("xception_blood_cancer_model.h5")
+incep_model = load_model("inceptionv3_blood_cancer_model.h5")
 
 
 # Load feature extractor
