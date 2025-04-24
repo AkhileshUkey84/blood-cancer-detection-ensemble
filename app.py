@@ -1,7 +1,11 @@
 import streamlit as st
 import numpy as np
 from PIL import Image
-import cv2
+try:
+    import cv2
+    st.success("OpenCV is successfully imported!")
+except ImportError as e:
+    st.error(f"Error importing OpenCV: {e}")
 import tensorflow as tf
 from tensorflow.keras.applications import VGG16, Xception, InceptionV3
 from tensorflow.keras.models import load_model
