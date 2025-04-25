@@ -21,16 +21,19 @@ import gdown
 # Download models from Google Drive
 def download_models():
     import os
-    if not os.path.exists("cnn_blood_cancer_model.h5"):
-        gdown.download("https://drive.google.com/uc?id=178mgl9upoITsR1YlWJ4AJLnzX3SJoN0N", "cnn_blood_cancer_model.h5", quiet=False)
-    if not os.path.exists("inceptionv3_blood_cancer_model.h5"):
-        gdown.download("https://drive.google.com/uc?id=1K4MmvR5-FlV98CfADY8t7MQB_4SkZ3jp", "inceptionv3_blood_cancer_model.h5", quiet=False)
-    if not os.path.exists("logistic_regression_model.pkl"):
-        gdown.download("https://drive.google.com/uc?id=1P0AVe1fA5n1_nILogO7oMqoarQky4Y-V", "logistic_regression_model.pkl", quiet=False)
-    if not os.path.exists("svm_model.pkl"):
-        gdown.download("https://drive.google.com/uc?id=1v7-jcuOIE4xfZcWG3PuY5__AAZTRGKLY", "svm_model.pkl", quiet=False)
-    if not os.path.exists("xception_blood_cancer_model.h5"):
-        gdown.download("https://drive.google.com/uc?id=14A73FT3MzdGu4h1m9DEFvwm7XoW3erfF", "xception_blood_cancer_model.h5", quiet=False)
+
+    def download_file(url, filename, expected_min_size_kb):
+        if not os.path.exists(filename) or os.path.getsize(filename) < expected_min_size_kb * 1024:
+            gdown.download(url, filename, quiet=False)
+            size_kb = os.path.getsize(filename) // 1024
+            if size_kb < expected_min_size_kb:
+                raise ValueError(f"{filename} might be corrupted. Size too small: {size_kb} KB")
+
+    download_file("https://drive.google.com/uc?id=178mgl9upoITsR1YlWJ4AJLnzX3SJoN0N", "cnn_blood_cancer_model.h5", 25000)
+    download_file("https://drive.google.com/uc?id=1K4MmvR5-FlV98CfADY8t7MQB_4SkZ3jp", "inceptionv3_blood_cancer_model.h5", 90000)
+    download_file("https://drive.google.com/uc?id=1P0AVe1fA5n1_nILogO7oMqoarQky4Y-V", "logistic_regression_model.pkl", 300)
+    download_file("https://drive.google.com/uc?id=1v7-jcuOIE4xfZcWG3PuY5__AAZTRGKLY", "svm_model.pkl", 300)
+    download_file("https://drive.google.com/uc?id=14A73FT3MzdGu4h1m9DEFvwm7XoW3erfF", "xception_blood_cancer_model.h5", 90000)
 
     # Repeat similarly for the other models
 
