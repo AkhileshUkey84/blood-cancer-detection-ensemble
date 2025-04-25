@@ -24,13 +24,13 @@ def download_models():
     if not os.path.exists("cnn_blood_cancer_model.h5"):
         gdown.download("https://drive.google.com/uc?id=178mgl9upoITsR1YlWJ4AJLnzX3SJoN0N", "cnn_blood_cancer_model.h5", quiet=False)
     if not os.path.exists("inceptionv3_blood_cancer_model.h5"):
-        gdown.download("https://drive.google.com/file/d/1K4MmvR5-FlV98CfADY8t7MQB_4SkZ3jp", "inceptionv3_blood_cancer_model.h5", quiet=False)
+        gdown.download("https://drive.google.com/uc?id=1K4MmvR5-FlV98CfADY8t7MQB_4SkZ3jp", "inceptionv3_blood_cancer_model.h5", quiet=False)
     if not os.path.exists("logistic_regression_model.pkl"):
-        gdown.download("https://drive.google.com/file/d/1P0AVe1fA5n1_nILogO7oMqoarQky4Y-V", "logistic_regression_model.pkl", quiet=False)
+        gdown.download("https://drive.google.com/uc?id=1P0AVe1fA5n1_nILogO7oMqoarQky4Y-V", "logistic_regression_model.pkl", quiet=False)
     if not os.path.exists("svm_model.pkl"):
-        gdown.download("https://drive.google.com/file/d/1v7-jcuOIE4xfZcWG3PuY5__AAZTRGKLY", "svm_model.pkl", quiet=False)
+        gdown.download("https://drive.google.com/uc?id=1v7-jcuOIE4xfZcWG3PuY5__AAZTRGKLY", "svm_model.pkl", quiet=False)
     if not os.path.exists("xception_blood_cancer_model.h5"):
-        gdown.download("https://drive.google.com/file/d/14A73FT3MzdGu4h1m9DEFvwm7XoW3erfF", "xception_blood_cancer_model.h5", quiet=False)
+        gdown.download("https://drive.google.com/uc?id=14A73FT3MzdGu4h1m9DEFvwm7XoW3erfF", "xception_blood_cancer_model.h5", quiet=False)
 
     # Repeat similarly for the other models
 
