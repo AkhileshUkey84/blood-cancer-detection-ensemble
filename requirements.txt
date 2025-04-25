@@ -1,8 +1,8 @@
 streamlit
-tensorflow
 numpy
-Pillow
-opencv-python==4.5.5.64
+pillow
+opencv-python
+tensorflow
 scikit-learn
+joblib
 gdown
-joblib==1.1.0
