@@ -13,29 +13,50 @@ from tensorflow.keras.applications.vgg16 import preprocess_input as vgg_preproce
 from tensorflow.keras.applications.xception import preprocess_input as xcept_preprocess
 from tensorflow.keras.applications.inception_v3 import preprocess_input as incep_preprocess
 import joblib
+import os
+import requests
 
 label_map = {'Benign': 0, '[Malignant] Pre-B': 1, '[Malignant] Pro-B': 2, '[Malignant] early Pre-B': 3}
 
-import gdown
+# Helper for Google Drive download
+def download_file_from_google_drive(id, destination, min_expected_kb):
+    def get_confirm_token(response):
+        for key, value in response.cookies.items():
+            if key.startswith('download_warning'):
+                return value
+        return None
 
-# Download models from Google Drive
+    def save_response_content(response, destination):
+        CHUNK_SIZE = 32768
+        with open(destination, "wb") as f:
+            for chunk in response.iter_content(CHUNK_SIZE):
+                if chunk:
+                    f.write(chunk)
+
+    if os.path.exists(destination) and os.path.getsize(destination) > min_expected_kb * 1024:
+        return  # Already downloaded correctly
+
+    URL = "https://docs.google.com/uc?export=download"
+    session = requests.Session()
+    response = session.get(URL, params={'id': id}, stream=True)
+    token = get_confirm_token(response)
+
+    if token:
+        params = {'id': id, 'confirm': token}
+        response = session.get(URL, params=params, stream=True)
+
+    save_response_content(response, destination)
+    size_kb = os.path.getsize(destination) // 1024
+    if size_kb < min_expected_kb:
+        raise ValueError(f"File {destination} is too small ({size_kb} KB), may be corrupted.")
+
+# Download models
 def download_models():
-    import os
-
-    def download_file(url, filename, expected_min_size_kb):
-        if not os.path.exists(filename) or os.path.getsize(filename) < expected_min_size_kb * 1024:
-            gdown.download(url, filename, quiet=False)
-            size_kb = os.path.getsize(filename) // 1024
-            if size_kb < expected_min_size_kb:
-                raise ValueError(f"{filename} might be corrupted. Size too small: {size_kb} KB")
-
-    download_file("https://drive.google.com/uc?id=178mgl9upoITsR1YlWJ4AJLnzX3SJoN0N", "cnn_blood_cancer_model.h5", 25000)
-    download_file("https://drive.google.com/uc?id=1K4MmvR5-FlV98CfADY8t7MQB_4SkZ3jp", "inceptionv3_blood_cancer_model.h5", 90000)
-    download_file("https://drive.google.com/uc?id=1P0AVe1fA5n1_nILogO7oMqoarQky4Y-V", "logistic_regression_model.pkl", 300)
-    download_file("https://drive.google.com/uc?id=1v7-jcuOIE4xfZcWG3PuY5__AAZTRGKLY", "svm_model.pkl", 300)
-    download_file("https://drive.google.com/uc?id=14A73FT3MzdGu4h1m9DEFvwm7XoW3erfF", "xception_blood_cancer_model.h5", 90000)
-
-    # Repeat similarly for the other models
+    download_file_from_google_drive("178mgl9upoITsR1YlWJ4AJLnzX3SJoN0N", "cnn_blood_cancer_model.h5", 25000)
+    download_file_from_google_drive("1K4MmvR5-FlV98CfADY8t7MQB_4SkZ3jp", "inceptionv3_blood_cancer_model.h5", 90000)
+    download_file_from_google_drive("1P0AVe1fA5n1_nILogO7oMqoarQky4Y-V", "logistic_regression_model.pkl", 300)
+    download_file_from_google_drive("1v7-jcuOIE4xfZcWG3PuY5__AAZTRGKLY", "svm_model.pkl", 300)
+    download_file_from_google_drive("14A73FT3MzdGu4h1m9DEFvwm7XoW3erfF", "xception_blood_cancer_model.h5", 90000)
 
 with st.spinner("Downloading models (first time only)..."):
     download_models()
@@ -46,7 +67,6 @@ log_model = joblib.load("logistic_regression_model.pkl")
 cnn_model = load_model("cnn_blood_cancer_model.h5")
 xcept_model = load_model("xception_blood_cancer_model.h5")
 incep_model = load_model("inceptionv3_blood_cancer_model.h5")
-
 
 # Load feature extractor
 vgg_model = VGG16(weights="imagenet", include_top=False, input_shape=(224, 224, 3))
@@ -96,8 +116,6 @@ def predict_ensemble(img):
     final_pred = index_to_class[final_pred_idx]
 
     return predictions, final_pred
-
-
 
 # Streamlit UI
 st.title("🧬 Blood Cancer Image Classification")
